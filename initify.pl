@@ -1,3 +1,6 @@
+# (c) goose121, 2017
+# Released under the MIT license
+
 use v5.10.1;
 use feature "switch";
 my $type = "simple";
