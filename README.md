@@ -1,5 +1,5 @@
 # initify
-This utility converts simple systemd services to OpenRC init-scripts
+This utility converts simple systemd services to OpenRC init-scripts.
 
 ## Usage
     initify.pl [filename]
