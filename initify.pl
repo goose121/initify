@@ -1,10 +1,24 @@
+#!/bin/env perl
 use v5.10.1;
 use feature "switch";
+use Getopt::Long;
+use Pod::Usage;
+
+my $name = "(fill in)";
 my $type = "simple";
 my @cmds_start = ();
 my @cmds_stop = ();
 my $pidfile = "";
 my $desc = "";
+
+my %opt;
+GetOptions(\%opt,
+           "name=s",
+           "help|?") || pod2usage(2);
+
+pod2usage() if ($opt{help});
+
+$name = $opt{name} if (length $opt{name});
 
 while(<>) {
     #s/\s*|\s*$//g; # Trim whitespace
@@ -56,6 +70,32 @@ command=$cmd_path[0]
 command_args="$cmd_argl[0]"
 pidfile=$pidfile
 
-name="(fill in)"
+name="$name"
 description="$desc"
 EOF
+
+__END__
+
+=head1 NAME
+
+initify - Convert systemd units to OpenRC init-files
+
+=head1 SYNOPSIS
+
+    initify [options] file
+
+=head2 Options
+
+=over 12
+
+=item -h, --help
+
+Print this message
+
+=item -n <name>, --name=<name>
+
+Set the name of the unit created
+
+=back
+
+=cut
