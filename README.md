@@ -2,10 +2,9 @@
 This utility converts simple systemd services to OpenRC init-scripts.
 
 ## Usage
-    initify.pl [filename]
+See
 
-NOTE: The service name will initially be `(fill in)`. This is due to the ability to pipe service-files from `stdin`, as well
-as the lack of a service-name field in systemd services. 
+    initify.pl --help
 
 ## TODO
 
