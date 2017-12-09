@@ -10,4 +10,4 @@ as the lack of a service-name field in systemd services.
 ## TODO
 
 - Handle the targets which directly map to OpenRC runlevels
-- Convert systemd timers to crontab entries
+- ~~Convert systemd timers to crontab entries~~
