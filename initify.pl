@@ -14,17 +14,31 @@ my @cmds_start = ();
 my @cmds_stop = ();
 my $pidfile = "";
 my $desc = "";
-(my $service=$ARGV[0])=~s/\.service//;
 
+# parse CLI args
 my %opt;
 GetOptions(\%opt,
            "name=s",
            "help|?") || pod2usage(2);
-
 pod2usage() if ($opt{help});
 
-$service = $opt{name} if (length $opt{name});
+# sanity checks
+my $USAGE = "Usage: initify [options] some-systemd.service";
+unless (@ARGV > 0 && $ARGV[0] =~ /(.*\/)?([^\/.]*)\.service/) {
+    print "no *.service file specified - quitting\n$USAGE\n";
+    exit;
+}
+unless (-e "$ARGV[0]") {
+    print "can not find *.service file: '$ARGV[0]' - quitting\n$USAGE\n";
+    exit;
+}
 
+# get systemd service source file, and target service name
+(my $service = $ARGV[0])=~s/\.service//;
+(my $svc_name = $ARGV[0])=~s|(.*/)?([^/.]*)\.service|$2|;
+$svc_name = $opt{name} if (length $opt{name});
+
+# begin
 while(<>) {
     #s/\s*|\s*$//g; # Trim whitespace
     if (m/^Type\s*=\s*(.*)/) {
@@ -77,7 +91,7 @@ command=$cmd_path[0]
 command_args="$cmd_argl[0]"
 pidfile=$pidfile
 
-name="$service"
+name="$svc_name"
 description="$desc"
 EOF
 
